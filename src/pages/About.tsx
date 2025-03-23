@@ -94,7 +94,7 @@ const About = () => {
               },
               {
                 area: "Operating Systems",
-                skills: ["Windows 10/11 Installation", "macOS Support", "Linux Configuration", "Dual Boot Setup", "System Optimization", "Driver Management"],
+                skills: ["Windows 10/11 Installation", "Windows System Optimization", "Windows Driver Management", "Windows Security Setup", "Windows Recovery", "Windows Troubleshooting"],
               },
               {
                 area: "Microsoft Office",
