@@ -23,15 +23,19 @@ const Footer = () => {
           <div className="space-y-2">
             <div className="flex items-center gap-3">
               <Mail className="h-5 w-5 text-sapphire-500" />
-              <span className="text-sm">contact@saffiretech.com</span>
+              <a href="mailto:enosaf7@gmail.com" className="text-sm hover:text-sapphire-600 transition-colors">
+                enosaf7@gmail.com
+              </a>
             </div>
             <div className="flex items-center gap-3">
               <Phone className="h-5 w-5 text-sapphire-500" />
-              <span className="text-sm">+1 (555) 123-4567</span>
+              <a href="tel:+233596760174" className="text-sm hover:text-sapphire-600 transition-colors">
+                +233 596 760 174
+              </a>
             </div>
             <div className="flex items-center gap-3">
               <MapPin className="h-5 w-5 text-sapphire-500" />
-              <span className="text-sm">University Campus, CA 94000</span>
+              <span className="text-sm">University of Mines and Technology (Tarkwa)</span>
             </div>
           </div>
           
@@ -42,7 +46,7 @@ const Footer = () => {
             <a href="#" className="text-gray-500 hover:text-sapphire-500 transition-colors">
               <Linkedin className="h-6 w-6" />
             </a>
-            <a href="#" className="text-gray-500 hover:text-sapphire-500 transition-colors">
+            <a href="https://wa.me/qr/LNJVYTYMBQ5SK1" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-sapphire-500 transition-colors">
               <Twitter className="h-6 w-6" />
             </a>
           </div>

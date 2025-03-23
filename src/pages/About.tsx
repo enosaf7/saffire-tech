@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { GraduationCap, Briefcase, Award, ArrowRight } from 'lucide-react';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 const About = () => {
   return (
@@ -26,18 +27,19 @@ const About = () => {
         <div className="max-w-7xl mx-auto">
           <div className="md:flex items-center gap-12">
             <div className="md:w-2/5 mb-10 md:mb-0 animate-fade-in-right">
-              <div className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-                {/* Replace with your actual image */}
-                <div className="w-full h-full bg-gradient-to-br from-primary/80 to-accent/80 flex items-center justify-center">
-                  <span className="text-white text-lg">Your Image Here</span>
-                </div>
+              <div className="aspect-square rounded-lg overflow-hidden">
+                <img 
+                  src="/lovable-uploads/9be97b4c-7c86-4d6b-917f-ad2f7597453a.png" 
+                  alt="Enoch Agyei Osafo" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
             
             <div className="md:w-3/5 animate-fade-in-left">
-              <h2 className="text-3xl font-bold mb-6">Hi, I'm [Your Name]</h2>
+              <h2 className="text-3xl font-bold mb-6">Hi, I'm Enoch Agyei Osafo</h2>
               <p className="text-muted-foreground mb-4">
-                I'm a [Your Major] student at [Your University] with a passion for technology
+                I'm a BSc. Mathematical Science student at University of Mines and Technology (Tarkwa) with a passion for technology
                 and helping fellow students overcome technical challenges that can get in the way
                 of academic success.
               </p>
@@ -54,15 +56,15 @@ const About = () => {
               <div className="space-y-3 mb-8">
                 <div className="flex items-center">
                   <GraduationCap className="h-5 w-5 text-primary mr-2" />
-                  <span>[Your Major] Student at [Your University]</span>
+                  <span>BSc. Mathematical Science Student at University of Mines and Technology</span>
                 </div>
                 <div className="flex items-center">
                   <Briefcase className="h-5 w-5 text-primary mr-2" />
-                  <span>[X] Years of Experience in Tech Support</span>
+                  <span>12 Years of Experience in Tech Support</span>
                 </div>
                 <div className="flex items-center">
                   <Award className="h-5 w-5 text-primary mr-2" />
-                  <span>Helped [X]+ Students with Tech Solutions</span>
+                  <span>Helped 70+ Students with Tech Solutions</span>
                 </div>
               </div>
               
@@ -176,10 +178,34 @@ const About = () => {
             </div>
             
             <div className="md:w-1/2 animate-fade-in-left">
-              <div className="aspect-video bg-gray-200 rounded-lg overflow-hidden">
-                {/* Replace with your actual image */}
-                <div className="w-full h-full bg-gradient-to-br from-accent/60 to-primary/60 flex items-center justify-center">
-                  <span className="text-white text-lg">Student Success Image</span>
+              <div className="aspect-video bg-white rounded-lg overflow-hidden shadow-lg border border-sapphire-100">
+                <div className="w-full h-full flex flex-col items-center justify-center p-6">
+                  <h3 className="text-xl font-bold text-sapphire-800 mb-4">Contact Information</h3>
+                  <ul className="space-y-3 w-full">
+                    <li className="flex items-center">
+                      <span className="font-semibold w-24">Email:</span>
+                      <a href="mailto:enosaf7@gmail.com" className="text-sapphire-600 hover:text-sapphire-800 transition-colors">
+                        enosaf7@gmail.com
+                      </a>
+                    </li>
+                    <li className="flex items-center">
+                      <span className="font-semibold w-24">Phone:</span>
+                      <a href="tel:+233596760174" className="text-sapphire-600 hover:text-sapphire-800 transition-colors">
+                        +233 596 760 174
+                      </a>
+                    </li>
+                    <li className="flex items-center">
+                      <span className="font-semibold w-24">Location:</span>
+                      <span>University of Mines and Technology (Tarkwa)</span>
+                    </li>
+                    <li className="flex items-center">
+                      <span className="font-semibold w-24">WhatsApp:</span>
+                      <a href="https://wa.me/qr/LNJVYTYMBQ5SK1" target="_blank" rel="noopener noreferrer" 
+                         className="text-sapphire-600 hover:text-sapphire-800 transition-colors">
+                        Connect on WhatsApp
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </div>
               
