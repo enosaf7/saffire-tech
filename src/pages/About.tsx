@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { GraduationCap, Briefcase, Award, ArrowRight } from 'lucide-react';
+import { GraduationCap, Briefcase, Award, ArrowRight, Database, ChartBar, Search, Table, Code, SlidersHorizontal } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 const About = () => {
@@ -105,6 +105,10 @@ const About = () => {
                 skills: ["Portfolio Websites", "Project Showcases", "Small Business Sites", "Landing Pages", "Basic E-Commerce", "Content Management"],
               },
               {
+                area: "Data Analysis",
+                skills: ["Statistical Analysis", "Data Visualization", "Research Methods", "SPSS & Excel Analysis", "Mathematical Modeling", "Report Generation"],
+              },
+              {
                 area: "Troubleshooting",
                 skills: ["Software Conflicts", "Performance Issues", "Connectivity Problems", "Error Resolution", "Data Recovery", "Security Concerns"],
               },
@@ -133,8 +137,75 @@ const About = () => {
         </div>
       </section>
       
-      {/* Philosophy */}
+      {/* Data Analysis Section */}
       <section className="py-20 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="section-heading">Data Analysis Services</h2>
+            <p className="section-subheading mx-auto">
+              Leveraging my mathematical background to help you make sense of your data
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Statistical Analysis",
+                description: "Comprehensive statistical tests and analysis for research projects and academic papers.",
+                icon: <ChartBar className="h-8 w-8 text-primary" />,
+              },
+              {
+                title: "Data Visualization",
+                description: "Transform complex data into clear, compelling visuals that tell your story effectively.",
+                icon: <ChartBar className="h-8 w-8 text-primary" />,
+              },
+              {
+                title: "Research Support",
+                description: "Assistance with research methodology, data collection, and analysis for academic projects.",
+                icon: <Search className="h-8 w-8 text-primary" />,
+              },
+              {
+                title: "Data Management",
+                description: "Organize, clean, and prepare your data for analysis and presentation.",
+                icon: <Database className="h-8 w-8 text-primary" />,
+              },
+              {
+                title: "Mathematical Modeling",
+                description: "Create mathematical models to solve complex problems and make predictions.",
+                icon: <Code className="h-8 w-8 text-primary" />,
+              },
+              {
+                title: "Software Training",
+                description: "Learn how to use SPSS, Excel, MATLAB, and other data analysis tools effectively.",
+                icon: <SlidersHorizontal className="h-8 w-8 text-primary" />,
+              },
+            ].map((service, index) => (
+              <div 
+                key={index} 
+                className="bg-secondary rounded-lg p-8 transition-all duration-300 hover:shadow-lg animate-fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="flex justify-center mb-4">
+                  {service.icon}
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-center">{service.title}</h3>
+                <p className="text-muted-foreground text-center">{service.description}</p>
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-12 text-center">
+            <Button asChild size="lg" className="btn-hover">
+              <Link to="/contact" className="flex items-center">
+                Get Data Analysis Help <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+      
+      {/* Philosophy */}
+      <section className="py-20 px-6 bg-secondary">
         <div className="max-w-7xl mx-auto">
           <div className="md:flex items-center gap-12">
             <div className="md:w-1/2 mb-10 md:mb-0 animate-fade-in-right">
@@ -163,7 +234,7 @@ const About = () => {
                     description: "Your data and privacy are always respected. I maintain strict confidentiality with all client information."
                   },
                 ].map((principle, index) => (
-                  <div key={index} className="bg-secondary p-6 rounded-lg">
+                  <div key={index} className="bg-white p-6 rounded-lg">
                     <h3 className="text-lg font-semibold mb-2">{principle.title}</h3>
                     <p className="text-muted-foreground">{principle.description}</p>
                   </div>
@@ -209,7 +280,7 @@ const About = () => {
                 </div>
               </div>
               
-              <div className="mt-8 p-6 bg-secondary rounded-lg">
+              <div className="mt-8 p-6 bg-white rounded-lg">
                 <h3 className="text-xl font-bold mb-4">Ready to Get Started?</h3>
                 <p className="mb-6">
                   Whether you need help with software installation, Windows setup, or a new website,
