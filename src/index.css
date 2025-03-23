@@ -1,5 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -16,16 +17,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    --primary: 210 100% 50%;
+    --primary: 220 86% 57%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96%;
+    --secondary: 220 14% 96%;
     --secondary-foreground: 222 47% 11%;
 
-    --muted: 210 40% 96%;
+    --muted: 220 14% 96%;
     --muted-foreground: 215 16% 47%;
 
-    --accent: 243 75% 59%;
+    --accent: 222 89% 51%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 84% 60%;
@@ -62,17 +63,44 @@
   .section-subheading {
     @apply text-muted-foreground text-lg md:text-xl max-w-3xl mt-4;
   }
+  
+  .sapphire-heading {
+    @apply font-playfair text-sapphire-800;
+  }
 }
 
 .hero-gradient {
-  background: radial-gradient(circle at 50% 50%, rgba(var(--accent-rgb), 0.1) 0%, rgba(var(--accent-rgb), 0) 60%),
-              linear-gradient(to right, rgba(var(--primary-rgb), 0.05), rgba(var(--accent-rgb), 0.05));
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(54, 118, 245, 0.1) 0%, rgba(22, 67, 210, 0) 60%),
+    linear-gradient(to right, rgba(30, 87, 234, 0.05), rgba(20, 57, 170, 0.05));
+}
+
+.sapphire-glow {
+  position: relative;
+}
+
+.sapphire-glow::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  background: linear-gradient(45deg, #3676f5, #1643d2, #142252, #3676f5);
+  background-size: 200% 200%;
+  filter: blur(15px);
+  opacity: 0.7;
+  z-index: -1;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @layer utilities {
   :root {
-    --primary-rgb: 21, 126, 251;
-    --accent-rgb: 104, 58, 252;
+    --primary-rgb: 30, 87, 234;
+    --accent-rgb: 22, 67, 210;
   }
   
   .text-balance {
@@ -80,7 +108,7 @@
   }
   
   .text-gradient {
-    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-sapphire-500 to-sapphire-700 bg-clip-text text-transparent;
   }
   
   .scale-hover {
@@ -97,5 +125,20 @@
   
   .btn-hover:hover::after {
     @apply opacity-100;
+  }
+  
+  .sapphire-card {
+    @apply border border-sapphire-100 bg-white shadow-lg hover:shadow-sapphire-200/50 transition-all duration-300;
+  }
+  
+  .sapphire-shimmer {
+    @apply relative overflow-hidden;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(54, 118, 245, 0.1), 
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
   }
 }

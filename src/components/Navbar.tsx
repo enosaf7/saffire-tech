@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Gem } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -33,8 +33,9 @@ const Navbar = () => {
     )}>
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <Link to="/" className="-m-1.5 p-1.5">
-            <span className="text-xl font-bold text-gradient">TechHelp</span>
+          <Link to="/" className="-m-1.5 p-1.5 flex items-center gap-2">
+            <Gem className="h-6 w-6 text-sapphire-500" />
+            <span className="text-xl font-bold text-gradient">Saffire Tech</span>
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -56,14 +57,14 @@ const Navbar = () => {
             <Link
               key={item.name}
               to={item.href}
-              className="text-sm font-semibold leading-6 text-foreground relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+              className="text-sm font-semibold leading-6 text-foreground relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-sapphire-500 after:transition-all after:duration-300 hover:after:w-full"
             >
               {item.name}
             </Link>
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Button asChild className="btn-hover">
+          <Button asChild className="btn-hover bg-sapphire-600 hover:bg-sapphire-700">
             <Link to="/contact">Book Now</Link>
           </Button>
         </div>
@@ -82,7 +83,7 @@ const Navbar = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-foreground hover:bg-muted"
+                  className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-foreground hover:bg-sapphire-100"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
@@ -90,7 +91,7 @@ const Navbar = () => {
               ))}
             </div>
             <div className="py-6 px-8">
-              <Button asChild className="w-full btn-hover">
+              <Button asChild className="w-full btn-hover bg-sapphire-600 hover:bg-sapphire-700">
                 <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>Book Now</Link>
               </Button>
             </div>

@@ -53,6 +53,19 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				sapphire: {
+					50: '#edf5ff',
+					100: '#d6e7ff',
+					200: '#b5d5ff',
+					300: '#8bbbff',
+					400: '#5896ff',
+					500: '#3676f5',
+					600: '#1e57ea',
+					700: '#1643d2',
+					800: '#1839aa',
+					900: '#1a3686',
+					950: '#142252',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -87,6 +100,10 @@ export default {
 				'float': {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-10px)' }
+				},
+				'shimmer': {
+					'0%': { backgroundPosition: '-200% 0' },
+					'100%': { backgroundPosition: '200% 0' }
 				}
 			},
 			animation: {
@@ -96,7 +113,8 @@ export default {
 				'fade-in-left': 'fade-in-left 0.7s ease-out',
 				'fade-in-right': 'fade-in-right 0.7s ease-out',
 				'scale-in': 'scale-in 0.5s ease-out',
-				'float': 'float 6s ease-in-out infinite'
+				'float': 'float 6s ease-in-out infinite',
+				'shimmer': 'shimmer 2s linear infinite'
 			}
 		}
 	},
