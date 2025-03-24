@@ -11,6 +11,7 @@ import WindowsOffice from "./pages/WindowsOffice";
 import WebsiteCreation from "./pages/WebsiteCreation";
 import DataAnalysis from "./pages/DataAnalysis";
 import Contact from "./pages/Contact";
+import Reviews from "./pages/Reviews";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/website-creation" element={<WebsiteCreation />} />
           <Route path="/data-analysis" element={<DataAnalysis />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/reviews" element={<Reviews />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

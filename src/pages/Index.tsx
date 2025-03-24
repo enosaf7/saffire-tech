@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -51,27 +50,6 @@ const services = [
     icon: ChartBar,
     link: '/data-analysis',
   }
-];
-
-const testimonials = [
-  {
-    id: 1,
-    quote: "The software installation service saved me hours of frustration. Everything works perfectly!",
-    author: "Alex J.",
-    role: "Engineering Student",
-  },
-  {
-    id: 2,
-    quote: "My new business website looks amazing and was delivered right on schedule. Highly recommend!",
-    author: "Michelle T.",
-    role: "Business Major",
-  },
-  {
-    id: 3,
-    quote: "Windows and Office work flawlessly now. The setup was quick and professional.",
-    author: "David L.",
-    role: "Computer Science Student",
-  },
 ];
 
 const benefits = [
@@ -251,22 +229,16 @@ const Index = () => {
             
             <div className="md:w-1/2 animate-fade-in-left">
               <div className="bg-secondary rounded-lg p-8 shadow-inner">
-                <h3 className="text-xl font-semibold mb-6 text-sapphire-800">What Students Say</h3>
+                <h3 className="text-xl font-semibold mb-6 text-sapphire-800">Recent Reviews</h3>
                 
                 <div className="space-y-6">
-                  {testimonials.map((testimonial, index) => (
-                    <div 
-                      key={testimonial.id} 
-                      className="bg-white rounded-lg p-6 shadow-md border border-sapphire-100"
-                      style={{ animationDelay: `${index * 0.2}s` }}
-                    >
-                      <p className="mb-4">"{testimonial.quote}"</p>
-                      <div>
-                        <div className="font-medium text-sapphire-800">{testimonial.author}</div>
-                        <div className="text-sm text-muted-foreground">{testimonial.role}</div>
-                      </div>
-                    </div>
-                  ))}
+                  <div className="text-center mt-4">
+                    <Button asChild variant="outline" className="group border-sapphire-500 text-sapphire-700">
+                      <Link to="/reviews">
+                        View All Reviews <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>

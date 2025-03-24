@@ -2,23 +2,30 @@
 import React from 'react';
 import { Star } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
-interface Review {
+export interface Review {
   id: number;
   quote: string;
   author: string;
   role: string;
   rating: number;
   avatar?: string;
+  featured?: boolean;
+  date?: string;
 }
 
-const reviews: Review[] = [
+// This will be our centralized reviews data that can be imported by other components
+export const reviews: Review[] = [
   {
     id: 1,
     quote: "The software installation service saved me hours of frustration. Everything works perfectly now!",
     author: "Alex J.",
     role: "Engineering Student",
     rating: 5,
+    featured: true,
+    date: "2023-03-15"
   },
   {
     id: 2,
@@ -26,6 +33,8 @@ const reviews: Review[] = [
     author: "Michelle T.",
     role: "Business Major",
     rating: 5,
+    featured: true,
+    date: "2023-04-22"
   },
   {
     id: 3,
@@ -33,6 +42,8 @@ const reviews: Review[] = [
     author: "David L.",
     role: "Computer Science Student",
     rating: 5,
+    featured: true,
+    date: "2023-05-10"
   },
   {
     id: 4,
@@ -40,6 +51,35 @@ const reviews: Review[] = [
     author: "Sarah K.",
     role: "Mathematics Student",
     rating: 5,
+    featured: true,
+    date: "2023-06-05"
+  },
+  {
+    id: 5,
+    quote: "Incredibly responsive and knowledgeable. Got my MATLAB running perfectly when I was on a tight deadline.",
+    author: "James R.",
+    role: "Physics Student",
+    rating: 4,
+    featured: true,
+    date: "2023-07-12"
+  },
+  {
+    id: 6,
+    quote: "Very professional service. Made the process of setting up my academic software painless.",
+    author: "Emma P.",
+    role: "Chemistry Student",
+    rating: 5,
+    featured: false,
+    date: "2023-08-20"
+  },
+  {
+    id: 7,
+    quote: "The website created for my small business has already brought in new customers. Worth every penny!",
+    author: "Thomas W.",
+    role: "Business Administration Student",
+    rating: 5,
+    featured: false,
+    date: "2023-09-15"
   },
 ];
 
@@ -58,7 +98,21 @@ const StarRating = ({ rating }: { rating: number }) => {
   );
 };
 
-const ReviewsSection = () => {
+const ReviewsSection = ({ limit = 5, showViewAllButton = true }: { limit?: number, showViewAllButton?: boolean }) => {
+  // Sort reviews so featured ones come first, then by date (newest first)
+  const sortedReviews = [...reviews]
+    .sort((a, b) => {
+      // First sort by featured status
+      if (a.featured && !b.featured) return -1;
+      if (!a.featured && b.featured) return 1;
+      
+      // Then sort by date (newest first)
+      const dateA = a.date ? new Date(a.date).getTime() : 0;
+      const dateB = b.date ? new Date(b.date).getTime() : 0;
+      return dateB - dateA;
+    })
+    .slice(0, limit);
+
   return (
     <section className="py-20 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -70,7 +124,7 @@ const ReviewsSection = () => {
         </div>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {reviews.map((review) => (
+          {sortedReviews.map((review) => (
             <div 
               key={review.id} 
               className="bg-secondary rounded-lg p-6 shadow-inner hover:shadow-md transition-shadow duration-300 animate-fade-in"
@@ -97,6 +151,16 @@ const ReviewsSection = () => {
             </div>
           ))}
         </div>
+
+        {showViewAllButton && reviews.length > limit && (
+          <div className="flex justify-center mt-10">
+            <Button asChild variant="outline" className="group border-sapphire-500 text-sapphire-700">
+              <Link to="/reviews">
+                View All Reviews
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

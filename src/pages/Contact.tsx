@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -19,7 +18,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { CalendarIcon, Clock, Mail, MapPin, Phone, CheckCircle2 } from 'lucide-react';
+import { CalendarIcon, Clock, Mail, MapPin, Phone, Star as StarIcon, Send, MessageSquare } from 'lucide-react';
 import { Checkbox } from "@/components/ui/checkbox";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -37,16 +36,38 @@ const Contact = () => {
     notifyEmail: true,
     notifySMS: false,
   });
+
+  const [reviewData, setReviewData] = useState({
+    name: '',
+    program: '',
+    service: '',
+    review: '',
+    rating: 5
+  });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmittingReview, setIsSubmittingReview] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
   
+  const handleReviewChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setReviewData(prev => ({ ...prev, [name]: value }));
+  };
+  
   const handleServiceChange = (value: string) => {
     setFormData(prev => ({ ...prev, service: value }));
+  };
+
+  const handleReviewServiceChange = (value: string) => {
+    setReviewData(prev => ({ ...prev, service: value }));
+  };
+
+  const handleRatingChange = (value: string) => {
+    setReviewData(prev => ({ ...prev, rating: parseInt(value) }));
   };
 
   const handleCheckboxChange = (name: string) => (checked: boolean) => {
@@ -56,8 +77,34 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // Format the booking information for message
+    const bookingInfo = `
+🔹 New Booking Request 🔹
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone || 'Not provided'}
+Service: ${formData.service}
+Date: ${formData.date}
+Time: ${formData.time}
+Additional Details: ${formData.message || 'None'}
+Notify via Email: ${formData.notifyEmail ? 'Yes' : 'No'}
+Notify via SMS: ${formData.notifySMS ? 'Yes' : 'No'}
+    `;
+
+    // Generate WhatsApp link with pre-filled message
+    const whatsappLink = `https://wa.me/233202752493?text=${encodeURIComponent(bookingInfo)}`;
     
-    // Simulate form submission
+    // Open WhatsApp in a new tab
+    window.open(whatsappLink, '_blank');
+    
+    // Generate mailto link
+    const mailtoLink = `mailto:enosaf7@gmail.com?subject=${encodeURIComponent('New Booking Request')}&body=${encodeURIComponent(bookingInfo)}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
+    // Show success message
     setTimeout(() => {
       toast.success("Booking request submitted successfully! I'll be in touch soon.");
       setIsSubmitting(false);
@@ -75,6 +122,46 @@ const Contact = () => {
     }, 1500);
   };
 
+  const handleReviewSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmittingReview(true);
+    
+    // Format the review information for message
+    const reviewInfo = `
+🌟 New Review Submission 🌟
+Name: ${reviewData.name}
+Program/Major: ${reviewData.program}
+Service Used: ${reviewData.service}
+Rating: ${reviewData.rating} stars
+Review: ${reviewData.review}
+    `;
+
+    // Generate WhatsApp link with pre-filled message
+    const whatsappLink = `https://wa.me/233202752493?text=${encodeURIComponent(reviewInfo)}`;
+    
+    // Open WhatsApp in a new tab
+    window.open(whatsappLink, '_blank');
+    
+    // Generate mailto link
+    const mailtoLink = `mailto:enosaf7@gmail.com?subject=${encodeURIComponent('New Review Submission')}&body=${encodeURIComponent(reviewInfo)}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
+    // Show success message
+    setTimeout(() => {
+      toast.success("Thank you for your review! It will be added to the testimonials soon.");
+      setIsSubmittingReview(false);
+      setReviewData({
+        name: '',
+        program: '',
+        service: '',
+        review: '',
+        rating: 5
+      });
+    }, 1500);
+  };
+
   return (
     <>
       <Navbar />
@@ -84,7 +171,7 @@ const Contact = () => {
         <div className="max-w-7xl mx-auto text-center animate-fade-in">
           <h1 className="section-heading mb-6">Contact & Booking</h1>
           <p className="section-subheading mx-auto">
-            Get in touch to book a service or ask any questions
+            Get in touch to book a service or share your experience
           </p>
         </div>
       </section>
@@ -233,9 +320,20 @@ const Contact = () => {
                       />
                     </div>
                     
-                    <Button type="submit" className="w-full btn-hover" disabled={isSubmitting}>
-                      {isSubmitting ? 'Submitting...' : 'Book Service'}
+                    <Button type="submit" className="w-full btn-hover flex items-center justify-center gap-2" disabled={isSubmitting}>
+                      {isSubmitting ? 'Submitting...' : (
+                        <>
+                          <Send className="h-4 w-4" /> Book Service
+                        </>
+                      )}
                     </Button>
+
+                    <div className="text-sm text-muted-foreground mt-4 p-3 bg-secondary rounded-md">
+                      <p className="flex items-center gap-2">
+                        <MessageSquare className="h-4 w-4" />
+                        <span>Your booking details will be sent to my WhatsApp and email for quick response.</span>
+                      </p>
+                    </div>
                   </form>
                 </CardContent>
               </Card>
@@ -315,13 +413,13 @@ const Contact = () => {
         </div>
       </section>
       
-      {/* Customer Reviews Form */}
+      {/* Live Review Submission Form */}
       <section className="py-20 px-6 bg-sapphire-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="section-heading">Share Your Experience</h2>
             <p className="section-subheading mx-auto">
-              Had a great experience with our services? Let others know!
+              Had a great experience with my services? Let others know!
             </p>
           </div>
           
@@ -334,20 +432,34 @@ const Contact = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form className="space-y-6">
+                <form onSubmit={handleReviewSubmit} className="space-y-6">
                   <div className="space-y-2">
                     <Label htmlFor="review-name">Your Name</Label>
-                    <Input id="review-name" placeholder="Your name" />
+                    <Input 
+                      id="review-name" 
+                      name="name"
+                      value={reviewData.name}
+                      onChange={handleReviewChange}
+                      placeholder="Your name" 
+                      required
+                    />
                   </div>
                   
                   <div className="space-y-2">
                     <Label htmlFor="review-program">Your Program/Major</Label>
-                    <Input id="review-program" placeholder="e.g. Computer Science, Engineering, etc." />
+                    <Input 
+                      id="review-program" 
+                      name="program"
+                      value={reviewData.program}
+                      onChange={handleReviewChange}
+                      placeholder="e.g. Computer Science, Engineering, etc." 
+                      required
+                    />
                   </div>
                   
                   <div className="space-y-2">
                     <Label htmlFor="service-used">Service Used</Label>
-                    <Select>
+                    <Select onValueChange={handleReviewServiceChange} value={reviewData.service}>
                       <SelectTrigger id="service-used">
                         <SelectValue placeholder="Select a service" />
                       </SelectTrigger>
@@ -360,25 +472,54 @@ const Contact = () => {
                       </SelectContent>
                     </Select>
                   </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="rating">Your Rating</Label>
+                    <Select onValueChange={handleRatingChange} defaultValue="5">
+                      <SelectTrigger id="rating">
+                        <SelectValue placeholder="Select your rating" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="5">5 Stars - Excellent</SelectItem>
+                        <SelectItem value="4">4 Stars - Very Good</SelectItem>
+                        <SelectItem value="3">3 Stars - Good</SelectItem>
+                        <SelectItem value="2">2 Stars - Fair</SelectItem>
+                        <SelectItem value="1">1 Star - Poor</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                   
                   <div className="space-y-2">
                     <Label htmlFor="review-text">Your Review</Label>
                     <Textarea 
                       id="review-text" 
+                      name="review"
+                      value={reviewData.review}
+                      onChange={handleReviewChange}
                       placeholder="Share your experience..." 
                       rows={4} 
+                      required
                     />
                   </div>
                   
                   <Button 
-                    type="button" 
-                    className="w-full btn-hover"
-                    onClick={() => {
-                      toast.success("Thank you for your review!");
-                    }}
+                    type="submit" 
+                    className="w-full btn-hover flex items-center justify-center gap-2"
+                    disabled={isSubmittingReview}
                   >
-                    Submit Review
+                    {isSubmittingReview ? 'Submitting...' : (
+                      <>
+                        <StarIcon className="h-4 w-4" /> Submit Review
+                      </>
+                    )}
                   </Button>
+
+                  <div className="text-sm text-muted-foreground mt-4 p-3 bg-secondary rounded-md">
+                    <p className="flex items-center gap-2">
+                      <MessageSquare className="h-4 w-4" />
+                      <span>Your review will be sent for approval and added to the testimonials section.</span>
+                    </p>
+                  </div>
                 </form>
               </CardContent>
             </Card>
