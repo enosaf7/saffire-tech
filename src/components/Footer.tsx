@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Gem } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, MessageCircle, Gem } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Footer = () => {
@@ -16,7 +16,7 @@ const Footer = () => {
             </Link>
             <p className="mt-2 text-muted-foreground max-w-md">
               Professional tech services for students. Get help with software installation,
-              Windows & Office setup, and website creation for your projects.
+              Windows & Office setup, website creation, and data analysis for your projects.
             </p>
           </div>
           
@@ -40,14 +40,11 @@ const Footer = () => {
           </div>
           
           <div className="flex space-x-6">
-            <a href="#" className="text-gray-500 hover:text-sapphire-500 transition-colors">
+            <a href="https://github.com/enosaf7" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-sapphire-500 transition-colors">
               <Github className="h-6 w-6" />
             </a>
-            <a href="#" className="text-gray-500 hover:text-sapphire-500 transition-colors">
-              <Linkedin className="h-6 w-6" />
-            </a>
             <a href="https://wa.me/qr/LNJVYTYMBQ5SK1" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-sapphire-500 transition-colors">
-              <Twitter className="h-6 w-6" />
+              <MessageCircle className="h-6 w-6" />
             </a>
           </div>
         </div>
@@ -78,6 +75,11 @@ const Footer = () => {
             <li>
               <Link to="/website-creation" className="text-sm leading-6 text-gray-600 hover:text-sapphire-600 transition-colors">
                 Website Creation
+              </Link>
+            </li>
+            <li>
+              <Link to="/data-analysis" className="text-sm leading-6 text-gray-600 hover:text-sapphire-600 transition-colors">
+                Data Analysis
               </Link>
             </li>
             <li>

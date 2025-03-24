@@ -19,7 +19,8 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { CalendarIcon, Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { CalendarIcon, Clock, Mail, MapPin, Phone, CheckCircle2 } from 'lucide-react';
+import { Checkbox } from "@/components/ui/checkbox";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { toast } from "sonner";
@@ -33,6 +34,8 @@ const Contact = () => {
     date: '',
     time: '',
     message: '',
+    notifyEmail: true,
+    notifySMS: false,
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,6 +47,10 @@ const Contact = () => {
   
   const handleServiceChange = (value: string) => {
     setFormData(prev => ({ ...prev, service: value }));
+  };
+
+  const handleCheckboxChange = (name: string) => (checked: boolean) => {
+    setFormData(prev => ({ ...prev, [name]: checked }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -62,6 +69,8 @@ const Contact = () => {
         date: '',
         time: '',
         message: '',
+        notifyEmail: true,
+        notifySMS: false,
       });
     }, 1500);
   };
@@ -141,6 +150,7 @@ const Contact = () => {
                             <SelectItem value="educational-software">Educational Software Installation</SelectItem>
                             <SelectItem value="windows-office">Windows & Office Installation</SelectItem>
                             <SelectItem value="website-creation">Website Creation</SelectItem>
+                            <SelectItem value="data-analysis">Data Analysis</SelectItem>
                             <SelectItem value="other">Other (Please specify)</SelectItem>
                           </SelectContent>
                         </Select>
@@ -177,6 +187,40 @@ const Contact = () => {
                       </div>
                     </div>
                     
+                    {/* Notification Preferences */}
+                    <div className="space-y-3 bg-secondary p-4 rounded-md">
+                      <h3 className="font-medium text-sapphire-800">Notification Preferences</h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        How would you like to be notified about your booking?
+                      </p>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox 
+                          id="notifyEmail" 
+                          checked={formData.notifyEmail} 
+                          onCheckedChange={handleCheckboxChange('notifyEmail')}
+                        />
+                        <label
+                          htmlFor="notifyEmail"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          Email notifications
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox 
+                          id="notifySMS" 
+                          checked={formData.notifySMS}
+                          onCheckedChange={handleCheckboxChange('notifySMS')}
+                        />
+                        <label
+                          htmlFor="notifySMS"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          SMS notifications
+                        </label>
+                      </div>
+                    </div>
+                    
                     <div className="space-y-2">
                       <Label htmlFor="message">Additional Details</Label>
                       <Textarea 
@@ -206,7 +250,7 @@ const Contact = () => {
                       <Mail className="h-5 w-5 text-primary mr-3 mt-0.5" />
                       <div>
                         <h3 className="font-semibold">Email</h3>
-                        <p className="text-muted-foreground">contact@techhelp.com</p>
+                        <p className="text-muted-foreground">enosaf7@gmail.com</p>
                       </div>
                     </div>
                     
@@ -214,7 +258,7 @@ const Contact = () => {
                       <Phone className="h-5 w-5 text-primary mr-3 mt-0.5" />
                       <div>
                         <h3 className="font-semibold">Phone</h3>
-                        <p className="text-muted-foreground">+1 (555) 123-4567</p>
+                        <p className="text-muted-foreground">+233 596 760 174</p>
                       </div>
                     </div>
                     
@@ -222,7 +266,7 @@ const Contact = () => {
                       <MapPin className="h-5 w-5 text-primary mr-3 mt-0.5" />
                       <div>
                         <h3 className="font-semibold">Campus Location</h3>
-                        <p className="text-muted-foreground">University Campus, CA 94000</p>
+                        <p className="text-muted-foreground">University of Mines and Technology (Tarkwa)</p>
                       </div>
                     </div>
                   </div>
@@ -267,6 +311,77 @@ const Contact = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Customer Reviews Form */}
+      <section className="py-20 px-6 bg-sapphire-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="section-heading">Share Your Experience</h2>
+            <p className="section-subheading mx-auto">
+              Had a great experience with our services? Let others know!
+            </p>
+          </div>
+          
+          <div className="max-w-2xl mx-auto">
+            <Card className="shadow-md">
+              <CardHeader>
+                <CardTitle>Leave a Review</CardTitle>
+                <CardDescription>
+                  Your feedback helps me improve and helps other students find the right tech support
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form className="space-y-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="review-name">Your Name</Label>
+                    <Input id="review-name" placeholder="Your name" />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="review-program">Your Program/Major</Label>
+                    <Input id="review-program" placeholder="e.g. Computer Science, Engineering, etc." />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="service-used">Service Used</Label>
+                    <Select>
+                      <SelectTrigger id="service-used">
+                        <SelectValue placeholder="Select a service" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="educational-software">Educational Software Installation</SelectItem>
+                        <SelectItem value="windows-office">Windows & Office Installation</SelectItem>
+                        <SelectItem value="website-creation">Website Creation</SelectItem>
+                        <SelectItem value="data-analysis">Data Analysis</SelectItem>
+                        <SelectItem value="other">Other Service</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="review-text">Your Review</Label>
+                    <Textarea 
+                      id="review-text" 
+                      placeholder="Share your experience..." 
+                      rows={4} 
+                    />
+                  </div>
+                  
+                  <Button 
+                    type="button" 
+                    className="w-full btn-hover"
+                    onClick={() => {
+                      toast.success("Thank you for your review!");
+                    }}
+                  >
+                    Submit Review
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>

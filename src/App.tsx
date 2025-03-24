@@ -9,6 +9,7 @@ import About from "./pages/About";
 import EducationalSoftware from "./pages/EducationalSoftware";
 import WindowsOffice from "./pages/WindowsOffice";
 import WebsiteCreation from "./pages/WebsiteCreation";
+import DataAnalysis from "./pages/DataAnalysis";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/educational-software" element={<EducationalSoftware />} />
           <Route path="/windows-office" element={<WindowsOffice />} />
           <Route path="/website-creation" element={<WebsiteCreation />} />
+          <Route path="/data-analysis" element={<DataAnalysis />} />
           <Route path="/contact" element={<Contact />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

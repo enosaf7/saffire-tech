@@ -14,10 +14,13 @@ import {
   CheckCircle,
   Calendar,
   Gem,
-  Diamond
+  Diamond,
+  Database,
+  ChartBar
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ReviewsSection from '@/components/ReviewsSection';
 
 const services = [
   {
@@ -41,6 +44,13 @@ const services = [
     icon: Code,
     link: '/website-creation',
   },
+  {
+    id: 4,
+    name: 'Data Analysis',
+    description: 'Statistical analysis, data visualization, and mathematical modeling for academic projects.',
+    icon: ChartBar,
+    link: '/data-analysis',
+  }
 ];
 
 const testimonials = [
@@ -113,7 +123,7 @@ const Index = () => {
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg md:text-xl leading-8 text-muted-foreground">
               Professional tech services to help you focus on what matters most - your education.
-              Software installation, Windows & Office setup, and website creation.
+              Software installation, Windows & Office setup, website creation, and data analysis.
             </p>
             <BookingCTA />
           </div>
@@ -130,7 +140,7 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((service, index) => (
               <div 
                 key={service.id} 
@@ -201,8 +211,11 @@ const Index = () => {
         </div>
       </section>
       
+      {/* Reviews Section */}
+      <ReviewsSection />
+      
       {/* Benefits Section */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-secondary">
         <div className="max-w-7xl mx-auto">
           <div className="md:flex items-center gap-12">
             <div className="md:w-1/2 mb-10 md:mb-0 animate-fade-in-right">
