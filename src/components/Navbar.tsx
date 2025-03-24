@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Gem } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -34,7 +33,40 @@ const Navbar = () => {
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
           <Link to="/" className="-m-1.5 p-1.5 flex items-center gap-2">
-            <Gem className="h-6 w-6 text-sapphire-500" />
+            <svg 
+              width="24" 
+              height="24" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg"
+              className="text-sapphire-500"
+            >
+              <path 
+                d="M6 3L18 3L22 9L12 21L2 9L6 3Z" 
+                fill="currentColor" 
+                fillOpacity="0.2" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              />
+              <path 
+                d="M12 21L12 9L2 9L12 21Z" 
+                fill="currentColor" 
+                stroke="currentColor" 
+                strokeWidth="1" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              />
+              <path 
+                d="M12 9L22 9L12 21L12 9Z" 
+                fill="currentColor" 
+                stroke="currentColor" 
+                strokeWidth="1" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              />
+            </svg>
             <span className="text-xl font-bold text-gradient">Saffire Tech</span>
           </Link>
         </div>
@@ -69,7 +101,6 @@ const Navbar = () => {
           </Button>
         </div>
       </nav>
-      {/* Mobile menu */}
       <div className={cn(
         "lg:hidden fixed inset-0 z-40 glass transition-transform duration-300 ease-in-out",
         mobileMenuOpen ? "translate-x-0" : "translate-x-full"
