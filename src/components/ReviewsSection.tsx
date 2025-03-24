@@ -99,14 +99,10 @@ const StarRating = ({ rating }: { rating: number }) => {
 };
 
 const ReviewsSection = ({ limit = 5, showViewAllButton = true }: { limit?: number, showViewAllButton?: boolean }) => {
-  // Sort reviews so featured ones come first, then by date (newest first)
+  // Sort reviews by date (newest first)
   const sortedReviews = [...reviews]
     .sort((a, b) => {
-      // First sort by featured status
-      if (a.featured && !b.featured) return -1;
-      if (!a.featured && b.featured) return 1;
-      
-      // Then sort by date (newest first)
+      // Sort by date (newest first)
       const dateA = a.date ? new Date(a.date).getTime() : 0;
       const dateB = b.date ? new Date(b.date).getTime() : 0;
       return dateB - dateA;

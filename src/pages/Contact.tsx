@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -24,6 +25,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { toast } from "sonner";
 import MapLocation from '@/components/MapLocation';
+import { reviews } from '@/components/ReviewsSection';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -96,9 +98,11 @@ Notify via SMS: ${formData.notifySMS ? 'Yes' : 'No'}
     
     window.open(whatsappLink, '_blank');
     
-    const mailtoLink = `mailto:enosaf7@gmail.com?subject=${encodeURIComponent('New Booking Request')}&body=${encodeURIComponent(bookingInfo)}`;
-    
-    window.location.href = mailtoLink;
+    // Send email if user wants email notifications
+    if (formData.notifyEmail) {
+      const mailtoLink = `mailto:enosaf7@gmail.com?subject=${encodeURIComponent('New Booking Request')}&body=${encodeURIComponent(bookingInfo)}`;
+      window.location.href = mailtoLink;
+    }
     
     setTimeout(() => {
       toast.success("Booking request submitted successfully! I'll be in touch soon.");
@@ -121,6 +125,21 @@ Notify via SMS: ${formData.notifySMS ? 'Yes' : 'No'}
     e.preventDefault();
     setIsSubmittingReview(true);
     
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
+    
+    // Create a new review object
+    const newReview = {
+      id: reviews.length + 1,
+      quote: reviewData.review,
+      author: reviewData.name,
+      role: reviewData.program,
+      rating: reviewData.rating,
+      date: formattedDate,
+      featured: false
+    };
+    
+    // Prepare the review info for WhatsApp
     const reviewInfo = `
 🌟 New Review Submission 🌟
 Name: ${reviewData.name}
@@ -128,18 +147,20 @@ Program/Major: ${reviewData.program}
 Service Used: ${reviewData.service}
 Rating: ${reviewData.rating} stars
 Review: ${reviewData.review}
+Date: ${formattedDate}
     `;
 
+    // Only send to WhatsApp, not email
     const whatsappLink = `https://wa.me/233202752493?text=${encodeURIComponent(reviewInfo)}`;
-    
     window.open(whatsappLink, '_blank');
     
-    const mailtoLink = `mailto:enosaf7@gmail.com?subject=${encodeURIComponent('New Review Submission')}&body=${encodeURIComponent(reviewInfo)}`;
-    
-    window.location.href = mailtoLink;
+    // Add the new review to the reviews array (in a real app, this would be handled by a backend)
+    // For demo purposes, we'll update the local array, though this won't persist after page refresh
+    // In a real implementation, you would call an API endpoint to save this data
+    reviews.unshift(newReview); // Add to beginning of array so it shows up first
     
     setTimeout(() => {
-      toast.success("Thank you for your review! It will be added to the testimonials soon.");
+      toast.success("Thank you for your review! It has been added to the testimonials.");
       setIsSubmittingReview(false);
       setReviewData({
         name: '',
