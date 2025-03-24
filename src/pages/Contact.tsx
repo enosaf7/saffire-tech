@@ -23,6 +23,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { toast } from "sonner";
+import MapLocation from '@/components/MapLocation';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -78,7 +79,6 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Format the booking information for message
     const bookingInfo = `
 🔹 New Booking Request 🔹
 Name: ${formData.name}
@@ -92,19 +92,14 @@ Notify via Email: ${formData.notifyEmail ? 'Yes' : 'No'}
 Notify via SMS: ${formData.notifySMS ? 'Yes' : 'No'}
     `;
 
-    // Generate WhatsApp link with pre-filled message
     const whatsappLink = `https://wa.me/233202752493?text=${encodeURIComponent(bookingInfo)}`;
     
-    // Open WhatsApp in a new tab
     window.open(whatsappLink, '_blank');
     
-    // Generate mailto link
     const mailtoLink = `mailto:enosaf7@gmail.com?subject=${encodeURIComponent('New Booking Request')}&body=${encodeURIComponent(bookingInfo)}`;
     
-    // Open email client
     window.location.href = mailtoLink;
     
-    // Show success message
     setTimeout(() => {
       toast.success("Booking request submitted successfully! I'll be in touch soon.");
       setIsSubmitting(false);
@@ -126,7 +121,6 @@ Notify via SMS: ${formData.notifySMS ? 'Yes' : 'No'}
     e.preventDefault();
     setIsSubmittingReview(true);
     
-    // Format the review information for message
     const reviewInfo = `
 🌟 New Review Submission 🌟
 Name: ${reviewData.name}
@@ -136,19 +130,14 @@ Rating: ${reviewData.rating} stars
 Review: ${reviewData.review}
     `;
 
-    // Generate WhatsApp link with pre-filled message
     const whatsappLink = `https://wa.me/233202752493?text=${encodeURIComponent(reviewInfo)}`;
     
-    // Open WhatsApp in a new tab
     window.open(whatsappLink, '_blank');
     
-    // Generate mailto link
     const mailtoLink = `mailto:enosaf7@gmail.com?subject=${encodeURIComponent('New Review Submission')}&body=${encodeURIComponent(reviewInfo)}`;
     
-    // Open email client
     window.location.href = mailtoLink;
     
-    // Show success message
     setTimeout(() => {
       toast.success("Thank you for your review! It will be added to the testimonials soon.");
       setIsSubmittingReview(false);
@@ -166,7 +155,6 @@ Review: ${reviewData.review}
     <>
       <Navbar />
       
-      {/* Header */}
       <section className="pt-32 pb-16 px-6 hero-gradient">
         <div className="max-w-7xl mx-auto text-center animate-fade-in">
           <h1 className="section-heading mb-6">Contact & Booking</h1>
@@ -176,7 +164,6 @@ Review: ${reviewData.review}
         </div>
       </section>
       
-      {/* Contact Form Section */}
       <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="md:flex gap-12">
@@ -274,7 +261,6 @@ Review: ${reviewData.review}
                       </div>
                     </div>
                     
-                    {/* Notification Preferences */}
                     <div className="space-y-3 bg-secondary p-4 rounded-md">
                       <h3 className="font-medium text-sapphire-800">Notification Preferences</h3>
                       <p className="text-sm text-muted-foreground mb-3">
@@ -401,11 +387,9 @@ Review: ${reviewData.review}
                   </p>
                 </div>
                 
-                <div className="aspect-video bg-gray-200 rounded-lg overflow-hidden">
-                  {/* Replace with an actual map or image */}
-                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                    <span className="text-gray-500">Campus Map</span>
-                  </div>
+                <div className="rounded-lg overflow-hidden">
+                  <h3 className="font-semibold mb-2">My Location in Ghana</h3>
+                  <MapLocation />
                 </div>
               </div>
             </div>
@@ -413,7 +397,6 @@ Review: ${reviewData.review}
         </div>
       </section>
       
-      {/* Live Review Submission Form */}
       <section className="py-20 px-6 bg-sapphire-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 animate-fade-in">
@@ -527,7 +510,6 @@ Review: ${reviewData.review}
         </div>
       </section>
       
-      {/* FAQ */}
       <section className="py-20 px-6 bg-secondary">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 animate-fade-in">
@@ -577,7 +559,6 @@ Review: ${reviewData.review}
         </div>
       </section>
       
-      {/* Testimonials */}
       <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 animate-fade-in">
@@ -622,7 +603,6 @@ Review: ${reviewData.review}
         </div>
       </section>
       
-      {/* CTA */}
       <section className="py-20 px-6 bg-primary text-white">
         <div className="max-w-7xl mx-auto text-center animate-fade-in">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to get started?</h2>
