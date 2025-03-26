@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -25,7 +24,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { toast } from "sonner";
 import MapLocation from '@/components/MapLocation';
-import { reviews } from '@/components/ReviewsSection';
+import { useReviews } from '@/hooks/use-reviews';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -49,7 +48,7 @@ const Contact = () => {
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmittingReview, setIsSubmittingReview] = useState(false);
+  const { addReview, isSubmitting: isSubmittingReview } = useReviews();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -123,14 +122,12 @@ Notify via SMS: ${formData.notifySMS ? 'Yes' : 'No'}
 
   const handleReviewSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmittingReview(true);
     
     const today = new Date();
     const formattedDate = today.toISOString().split('T')[0]; // YYYY-MM-DD format
     
-    // Create a new review object
+    // Create a new review object for Supabase
     const newReview = {
-      id: reviews.length + 1,
       quote: reviewData.review,
       author: reviewData.name,
       role: reviewData.program,
@@ -138,6 +135,9 @@ Notify via SMS: ${formData.notifySMS ? 'Yes' : 'No'}
       date: formattedDate,
       featured: false
     };
+    
+    // Add review to Supabase
+    addReview(newReview);
     
     // Prepare the review info for WhatsApp
     const reviewInfo = `
@@ -150,18 +150,12 @@ Review: ${reviewData.review}
 Date: ${formattedDate}
     `;
 
-    // Only send to WhatsApp, not email
+    // Send to WhatsApp
     const whatsappLink = `https://wa.me/233202752493?text=${encodeURIComponent(reviewInfo)}`;
     window.open(whatsappLink, '_blank');
     
-    // Add the new review to the reviews array (in a real app, this would be handled by a backend)
-    // For demo purposes, we'll update the local array, though this won't persist after page refresh
-    // In a real implementation, you would call an API endpoint to save this data
-    reviews.unshift(newReview); // Add to beginning of array so it shows up first
-    
-    setTimeout(() => {
-      toast.success("Thank you for your review! It has been added to the testimonials.");
-      setIsSubmittingReview(false);
+    // Only reset form if submission was successful
+    if (!isSubmittingReview) {
       setReviewData({
         name: '',
         program: '',
@@ -169,7 +163,7 @@ Date: ${formattedDate}
         review: '',
         rating: 5
       });
-    }, 1500);
+    }
   };
 
   return (

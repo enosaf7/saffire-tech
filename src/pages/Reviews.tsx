@@ -1,7 +1,8 @@
+
 import React, { useState, useMemo } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { reviews as allReviews } from '@/components/ReviewsSection';
+import { fallbackReviews } from '@/components/ReviewsSection';
 import { Star } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { 
@@ -13,6 +14,10 @@ import {
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useReviews } from '@/hooks/use-reviews';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertCircle } from 'lucide-react';
 
 const StarRating = ({ rating }: { rating: number }) => {
   return (
@@ -33,6 +38,11 @@ const Reviews = () => {
   const [sortOption, setSortOption] = useState("newest");
   const [filterRating, setFilterRating] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  
+  const { reviews: supabaseReviews, isLoading, error } = useReviews();
+  
+  // Use Supabase reviews if available, otherwise fallback to hardcoded reviews
+  const allReviews = supabaseReviews.length > 0 ? supabaseReviews : fallbackReviews;
 
   const filteredReviews = useMemo(() => {
     let result = [...allReviews];
@@ -146,46 +156,78 @@ const Reviews = () => {
       
       <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredReviews.map((review) => (
-              <div 
-                key={review.id} 
-                className="bg-secondary rounded-lg p-6 shadow-inner hover:shadow-md transition-shadow duration-300 animate-fade-in"
-              >
-                <div className="flex items-start mb-4">
-                  <Avatar className="h-10 w-10 mr-3">
-                    {review.avatar ? (
-                      <AvatarImage src={review.avatar} alt={review.author} />
-                    ) : (
-                      <AvatarFallback className="bg-sapphire-200 text-sapphire-700">
-                        {review.author.split(' ').map(n => n[0]).join('')}
-                      </AvatarFallback>
-                    )}
-                  </Avatar>
-                  <div>
-                    <div className="font-bold text-sapphire-800">{review.author}</div>
-                    <div className="text-xs text-muted-foreground">{review.role}</div>
-                    {review.date && (
-                      <div className="text-xs text-muted-foreground mt-1">
-                        {new Date(review.date).toLocaleDateString()}
-                      </div>
-                    )}
+          {error && (
+            <Alert variant="destructive" className="mb-6">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                Error loading reviews. Using fallback data.
+              </AlertDescription>
+            </Alert>
+          )}
+          
+          {isLoading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array(6).fill(0).map((_, index) => (
+                <div key={index} className="bg-secondary rounded-lg p-6">
+                  <div className="flex items-start mb-4">
+                    <Skeleton className="h-10 w-10 rounded-full mr-3" />
+                    <div className="space-y-2">
+                      <Skeleton className="h-4 w-24" />
+                      <Skeleton className="h-3 w-16" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-[80%]" />
+                    <Skeleton className="h-4 w-[60%]" />
                   </div>
                 </div>
-                
-                <StarRating rating={review.rating} />
-                
-                <p className="text-muted-foreground text-sm italic">"{review.quote}"</p>
-              </div>
-            ))}
-          </div>
-          
-          {filteredReviews.length === 0 && (
-            <div className="text-center py-10 px-6">
-              <p className="text-lg text-muted-foreground">
-                No reviews match your search criteria. Try adjusting your filters.
-              </p>
+              ))}
             </div>
+          ) : (
+            <>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredReviews.map((review) => (
+                  <div 
+                    key={review.id} 
+                    className="bg-secondary rounded-lg p-6 shadow-inner hover:shadow-md transition-shadow duration-300 animate-fade-in"
+                  >
+                    <div className="flex items-start mb-4">
+                      <Avatar className="h-10 w-10 mr-3">
+                        {review.avatar ? (
+                          <AvatarImage src={review.avatar} alt={review.author} />
+                        ) : (
+                          <AvatarFallback className="bg-sapphire-200 text-sapphire-700">
+                            {review.author.split(' ').map(n => n[0]).join('')}
+                          </AvatarFallback>
+                        )}
+                      </Avatar>
+                      <div>
+                        <div className="font-bold text-sapphire-800">{review.author}</div>
+                        <div className="text-xs text-muted-foreground">{review.role}</div>
+                        {review.date && (
+                          <div className="text-xs text-muted-foreground mt-1">
+                            {new Date(review.date).toLocaleDateString()}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <StarRating rating={review.rating} />
+                    
+                    <p className="text-muted-foreground text-sm italic">"{review.quote}"</p>
+                  </div>
+                ))}
+              </div>
+              
+              {filteredReviews.length === 0 && (
+                <div className="text-center py-10 px-6">
+                  <p className="text-lg text-muted-foreground">
+                    No reviews match your search criteria. Try adjusting your filters.
+                  </p>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>
