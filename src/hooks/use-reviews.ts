@@ -1,6 +1,6 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase, ReviewRecord, isUsingDefaultCredentials } from '@/lib/supabase';
+import { supabase, ReviewRecord, isUsingDefaultCredentials, exportReviewsToCSV, importReviewsFromCSV, LOCAL_STORAGE_KEY } from '@/lib/supabase';
 import { toast } from "sonner";
 import { fallbackReviews } from '@/components/ReviewsSection';
 
@@ -9,7 +9,7 @@ export const fetchReviews = async (): Promise<ReviewRecord[]> => {
   // If using default credentials, return fallback data immediately
   if (isUsingDefaultCredentials) {
     console.log('Using fallback reviews data due to missing Supabase credentials');
-    return fallbackReviews;
+    return getFallbackReviewsWithLocal();
   }
 
   try {
@@ -21,14 +21,14 @@ export const fetchReviews = async (): Promise<ReviewRecord[]> => {
     if (error) {
       console.error('Error fetching reviews:', error);
       toast.error('Failed to load reviews. Using fallback data.');
-      return fallbackReviews;
+      return getFallbackReviewsWithLocal();
     }
 
-    return data || fallbackReviews;
+    return data || getFallbackReviewsWithLocal();
   } catch (error) {
     console.error('Exception fetching reviews:', error);
     toast.error('Failed to load reviews. Using fallback data.');
-    return fallbackReviews;
+    return getFallbackReviewsWithLocal();
   }
 };
 
@@ -39,16 +39,20 @@ export const addReview = async (review: Omit<ReviewRecord, 'id' | 'created_at'>)
     console.log('Simulating review addition with fallback mechanism');
     
     // Create a "fake" review with an ID
+    const storedReviews = getFallbackReviewsWithLocal();
+    const newId = storedReviews.length > 0 
+      ? Math.max(...storedReviews.map(r => r.id)) + 1 
+      : 1;
+      
     const newReview: ReviewRecord = {
       ...review,
-      id: fallbackReviews.length + 1,
+      id: newId,
       date: new Date().toISOString().split('T')[0],
     };
     
     // Add to local storage to persist across page refreshes
-    const storedReviews = JSON.parse(localStorage.getItem('fallbackReviews') || JSON.stringify(fallbackReviews));
     storedReviews.unshift(newReview);
-    localStorage.setItem('fallbackReviews', JSON.stringify(storedReviews));
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(storedReviews));
     
     return newReview;
   }
@@ -75,11 +79,58 @@ export const addReview = async (review: Omit<ReviewRecord, 'id' | 'created_at'>)
 // Function to get fallback reviews with any locally saved ones
 export const getFallbackReviewsWithLocal = (): ReviewRecord[] => {
   try {
-    const storedReviews = localStorage.getItem('fallbackReviews');
+    const storedReviews = localStorage.getItem(LOCAL_STORAGE_KEY);
     return storedReviews ? JSON.parse(storedReviews) : fallbackReviews;
   } catch (e) {
     return fallbackReviews;
   }
+};
+
+// Export reviews to CSV file for download
+export const downloadReviewsAsCSV = (reviews: ReviewRecord[]): void => {
+  const csvContent = exportReviewsToCSV(reviews);
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.setAttribute('download', 'reviews.csv');
+  link.style.visibility = 'hidden';
+  
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  
+  toast.success("Reviews exported successfully");
+};
+
+// Import reviews from a CSV file
+export const importReviewsFromFile = (file: File): Promise<ReviewRecord[]> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    
+    reader.onload = (event) => {
+      try {
+        const csvContent = event.target?.result as string;
+        const importedReviews = importReviewsFromCSV(csvContent);
+        
+        // Save to local storage
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(importedReviews));
+        toast.success(`${importedReviews.length} reviews imported successfully`);
+        resolve(importedReviews);
+      } catch (error) {
+        toast.error("Failed to import reviews. Invalid file format.");
+        reject(error);
+      }
+    };
+    
+    reader.onerror = () => {
+      toast.error("Failed to read the file");
+      reject(new Error("Failed to read the file"));
+    };
+    
+    reader.readAsText(file);
+  });
 };
 
 // Custom hook for reviews management
@@ -116,11 +167,26 @@ export const useReviews = () => {
     },
   });
 
+  // Mutation for importing reviews
+  const importReviewsMutation = useMutation({
+    mutationFn: importReviewsFromFile,
+    onSuccess: (importedReviews) => {
+      queryClient.setQueryData(['reviews'], importedReviews);
+      queryClient.invalidateQueries({ queryKey: ['reviews'] });
+    },
+    onError: (error) => {
+      console.error('Error importing reviews:', error);
+    }
+  });
+
   return {
     reviews,
     isLoading,
     error,
     addReview: (review: Omit<ReviewRecord, 'id' | 'created_at'>) => addReviewMutation.mutate(review),
     isSubmitting: addReviewMutation.isPending,
+    exportReviews: () => downloadReviewsAsCSV(reviews),
+    importReviews: (file: File) => importReviewsMutation.mutate(file),
+    isImporting: importReviewsMutation.isPending
   };
 };

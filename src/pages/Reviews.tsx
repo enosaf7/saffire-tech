@@ -1,9 +1,9 @@
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { fallbackReviews } from '@/components/ReviewsSection';
-import { Star } from 'lucide-react';
+import { Star, Download, Upload, AlertCircle } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { 
   Select, 
@@ -17,7 +17,7 @@ import { Label } from '@/components/ui/label';
 import { useReviews } from '@/hooks/use-reviews';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const StarRating = ({ rating }: { rating: number }) => {
   return (
@@ -38,8 +38,16 @@ const Reviews = () => {
   const [sortOption, setSortOption] = useState("newest");
   const [filterRating, setFilterRating] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
-  const { reviews: supabaseReviews, isLoading, error } = useReviews();
+  const { 
+    reviews: supabaseReviews, 
+    isLoading, 
+    error, 
+    exportReviews,
+    importReviews,
+    isImporting
+  } = useReviews();
   
   // Use Supabase reviews if available, otherwise fallback to hardcoded reviews
   const allReviews = supabaseReviews.length > 0 ? supabaseReviews : fallbackReviews;
@@ -85,6 +93,21 @@ const Reviews = () => {
     
     return result;
   }, [allReviews, filterRating, searchTerm, sortOption]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      importReviews(file);
+    }
+    // Reset the input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const handleImportClick = () => {
+    fileInputRef.current?.click();
+  };
 
   return (
     <>
@@ -154,8 +177,35 @@ const Reviews = () => {
         </div>
       </section>
       
-      <section className="py-20 px-6 bg-white">
+      <section className="py-6 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
+          <div className="flex flex-wrap justify-end gap-4 mb-8">
+            <input
+              type="file"
+              ref={fileInputRef}
+              accept=".csv"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+            <Button 
+              variant="outline" 
+              onClick={handleImportClick}
+              disabled={isImporting}
+              className="flex items-center gap-2"
+            >
+              <Upload size={16} />
+              Import Reviews (CSV)
+            </Button>
+            <Button 
+              variant="outline" 
+              onClick={() => exportReviews()}
+              className="flex items-center gap-2"
+            >
+              <Download size={16} />
+              Export Reviews (CSV)
+            </Button>
+          </div>
+          
           {error && (
             <Alert variant="destructive" className="mb-6">
               <AlertCircle className="h-4 w-4" />
