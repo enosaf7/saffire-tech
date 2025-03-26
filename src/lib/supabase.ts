@@ -1,14 +1,24 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// Fallback values for development - replace these with your actual Supabase project details
+const DEFAULT_SUPABASE_URL = 'https://your-project-id.supabase.co';
+const DEFAULT_SUPABASE_ANON_KEY = 'your-anon-key';
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Supabase credentials are missing! Make sure to set the environment variables.');
+// Try to get values from environment variables, fall back to defaults if not available
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || DEFAULT_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || DEFAULT_SUPABASE_ANON_KEY;
+
+// Create the Supabase client
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// Log a warning if using default values
+if (supabaseUrl === DEFAULT_SUPABASE_URL || supabaseAnonKey === DEFAULT_SUPABASE_ANON_KEY) {
+  console.warn(
+    'Using default Supabase credentials. Please set the VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY ' +
+    'environment variables with your actual Supabase project details.'
+  );
 }
-
-export const supabase = createClient(supabaseUrl as string, supabaseAnonKey as string);
 
 // Type for the reviews table in Supabase
 export type ReviewRecord = {
