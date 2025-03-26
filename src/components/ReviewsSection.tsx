@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Star } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -91,10 +90,7 @@ const StarRating = ({ rating }: { rating: number }) => {
 };
 
 const ReviewsSection = ({ limit = 5, showViewAllButton = true }: { limit?: number, showViewAllButton?: boolean }) => {
-  const { reviews: supabaseReviews, isLoading, error } = useReviews();
-  
-  // Use Supabase reviews if available, otherwise fallback to hardcoded reviews
-  const allReviews = supabaseReviews.length > 0 ? supabaseReviews : fallbackReviews;
+  const { reviews: allReviews, isLoading, error } = useReviews();
   
   // Sort reviews by date (newest first) and limit to requested amount
   const sortedReviews = [...allReviews]
