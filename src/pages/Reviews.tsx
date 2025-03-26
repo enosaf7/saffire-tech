@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -35,16 +34,13 @@ const Reviews = () => {
   const [filterRating, setFilterRating] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Apply filters and sorting
   const filteredReviews = useMemo(() => {
     let result = [...allReviews];
     
-    // Apply rating filter
     if (filterRating !== "all") {
       result = result.filter(review => review.rating === parseInt(filterRating));
     }
     
-    // Apply search term
     if (searchTerm.trim()) {
       const searchLower = searchTerm.toLowerCase();
       result = result.filter(review => 
@@ -54,7 +50,6 @@ const Reviews = () => {
       );
     }
     
-    // Apply sorting
     switch(sortOption) {
       case "newest":
         result.sort((a, b) => {
@@ -85,7 +80,6 @@ const Reviews = () => {
     <>
       <Navbar />
       
-      {/* Header */}
       <section className="pt-32 pb-16 px-6 hero-gradient">
         <div className="max-w-7xl mx-auto text-center animate-fade-in">
           <h1 className="section-heading mb-6">Student Reviews</h1>
@@ -95,7 +89,6 @@ const Reviews = () => {
         </div>
       </section>
       
-      {/* Filters */}
       <section className="py-10 px-6 bg-white border-b">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-wrap gap-6 items-end justify-between">
@@ -151,7 +144,6 @@ const Reviews = () => {
         </div>
       </section>
       
-      {/* All Reviews */}
       <section className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

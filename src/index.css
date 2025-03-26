@@ -39,36 +39,6 @@
     --radius: 0.75rem;
   }
 
-  .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 220 86% 57%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-
-    --accent: 222 89% 51%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 212.7 26.8% 83.9%;
-  }
-
   * {
     @apply border-border scroll-smooth;
   }
@@ -79,7 +49,7 @@
   }
 
   .glass {
-    @apply backdrop-blur-lg bg-white/90 dark:bg-black/80 border border-white/10 shadow-lg;
+    @apply backdrop-blur-lg bg-white/90 border border-white/10 shadow-lg;
   }
   
   .section-container {
@@ -95,7 +65,7 @@
   }
   
   .sapphire-heading {
-    @apply font-playfair text-sapphire-800 dark:text-sapphire-300;
+    @apply font-playfair text-sapphire-800;
   }
 }
 
@@ -103,12 +73,6 @@
   background: 
     radial-gradient(circle at 50% 50%, rgba(54, 118, 245, 0.1) 0%, rgba(22, 67, 210, 0) 60%),
     linear-gradient(to right, rgba(30, 87, 234, 0.05), rgba(20, 57, 170, 0.05));
-}
-
-.dark .hero-gradient {
-  background: 
-    radial-gradient(circle at 50% 50%, rgba(54, 118, 245, 0.2) 0%, rgba(22, 67, 210, 0.05) 60%),
-    linear-gradient(to right, rgba(30, 87, 234, 0.1), rgba(20, 57, 170, 0.1));
 }
 
 .sapphire-glow {
@@ -147,10 +111,6 @@
     @apply bg-gradient-to-r from-sapphire-500 to-sapphire-700 bg-clip-text text-transparent;
   }
   
-  .dark .text-gradient {
-    @apply bg-gradient-to-r from-sapphire-400 to-sapphire-600 bg-clip-text text-transparent;
-  }
-  
   .scale-hover {
     @apply transition-transform duration-300 hover:scale-105;
   }
@@ -168,7 +128,7 @@
   }
   
   .sapphire-card {
-    @apply border border-sapphire-100 dark:border-sapphire-800/50 bg-white dark:bg-sapphire-950/30 shadow-lg hover:shadow-sapphire-200/50 dark:hover:shadow-sapphire-700/20 transition-all duration-300;
+    @apply border border-sapphire-100 bg-white shadow-lg hover:shadow-sapphire-200/50 transition-all duration-300;
   }
   
   .sapphire-shimmer {
@@ -210,9 +170,4 @@
 .hover-lift:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-/* Dark mode transition */
-.dark-transition {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }

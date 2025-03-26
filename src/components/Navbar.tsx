@@ -4,7 +4,6 @@ import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import ThemeToggle from './ThemeToggle';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -12,6 +11,8 @@ const navigation = [
   { name: 'Educational Software', href: '/educational-software' },
   { name: 'Windows & Office', href: '/windows-office' },
   { name: 'Website Creation', href: '/website-creation' },
+  { name: 'Data Analysis', href: '/data-analysis' },
+  { name: 'Reviews', href: '/reviews' },
   { name: 'Contact', href: '/contact' },
 ];
 
@@ -98,7 +99,6 @@ const Navbar = () => {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center gap-4">
-          <ThemeToggle />
           <Button asChild className="btn-hover bg-sapphire-600 hover:bg-sapphire-700">
             <Link to="/contact">Book Now</Link>
           </Button>
@@ -117,7 +117,7 @@ const Navbar = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-foreground hover:bg-sapphire-100 dark:hover:bg-sapphire-800/30"
+                  className="block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-foreground hover:bg-sapphire-100"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
@@ -125,9 +125,6 @@ const Navbar = () => {
               ))}
             </div>
             <div className="py-6 px-8 flex flex-col gap-4">
-              <div className="flex justify-center">
-                <ThemeToggle />
-              </div>
               <Button asChild className="w-full btn-hover bg-sapphire-600 hover:bg-sapphire-700">
                 <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>Book Now</Link>
               </Button>

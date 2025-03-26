@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -32,7 +31,7 @@ const WebsiteCreation = () => {
   }, []);
 
   return (
-    <div className="dark-transition min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
       
       {/* Header */}
@@ -68,7 +67,7 @@ const WebsiteCreation = () => {
       </section>
       
       {/* Website Examples Section */}
-      <section className="py-16 px-6 bg-secondary dark:bg-secondary/50">
+      <section className="py-16 px-6 bg-secondary">
         <div className="max-w-7xl mx-auto">
           <motion.div 
             className="text-center mb-12"
@@ -119,7 +118,7 @@ const WebsiteCreation = () => {
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
               >
-                <motion.div variants={fadeIn} className="bg-secondary dark:bg-secondary/50 rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
+                <motion.div variants={fadeIn} className="bg-secondary rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
                   <div className="inline-flex items-center justify-center p-2 bg-primary/10 rounded-lg mb-4">
                     <Layout className="h-6 w-6 text-primary" />
                   </div>
@@ -143,7 +142,7 @@ const WebsiteCreation = () => {
                   </ul>
                 </motion.div>
                 
-                <motion.div variants={fadeIn} className="bg-secondary dark:bg-secondary/50 rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
+                <motion.div variants={fadeIn} className="bg-secondary rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
                   <div className="inline-flex items-center justify-center p-2 bg-primary/10 rounded-lg mb-4">
                     <Globe className="h-6 w-6 text-primary" />
                   </div>
@@ -167,7 +166,7 @@ const WebsiteCreation = () => {
                   </ul>
                 </motion.div>
                 
-                <motion.div variants={fadeIn} className="bg-secondary dark:bg-secondary/50 rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
+                <motion.div variants={fadeIn} className="bg-secondary rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
                   <div className="inline-flex items-center justify-center p-2 bg-primary/10 rounded-lg mb-4">
                     <Layers className="h-6 w-6 text-primary" />
                   </div>
@@ -191,7 +190,7 @@ const WebsiteCreation = () => {
                   </ul>
                 </motion.div>
                 
-                <motion.div variants={fadeIn} className="bg-secondary dark:bg-secondary/50 rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
+                <motion.div variants={fadeIn} className="bg-secondary rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
                   <div className="inline-flex items-center justify-center p-2 bg-primary/10 rounded-lg mb-4">
                     <Smartphone className="h-6 w-6 text-primary" />
                   </div>
@@ -273,10 +272,10 @@ const WebsiteCreation = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
             >
-              <Card className="border-sapphire-200 dark:border-sapphire-800 shadow-lg hover:shadow-xl transition-all duration-300 mb-8">
+              <Card className="border-sapphire-200 shadow-lg hover:shadow-xl transition-all duration-300 mb-8">
                 <CardContent className="p-8">
-                  <div className="inline-flex items-center justify-center p-3 bg-sapphire-100 dark:bg-sapphire-900/50 rounded-full mb-4">
-                    <Sparkles className="h-6 w-6 text-sapphire-600 dark:text-sapphire-400" />
+                  <div className="inline-flex items-center justify-center p-3 bg-sapphire-100 rounded-full mb-4">
+                    <Sparkles className="h-6 w-6 text-sapphire-600" />
                   </div>
                   <h3 className="text-xl font-bold mb-4">My Website Service Includes:</h3>
                   
@@ -292,7 +291,7 @@ const WebsiteCreation = () => {
                     ].map((feature, index) => (
                       <div key={index} className="flex items-center group">
                         <CheckCircle className="h-5 w-5 text-primary mr-2 flex-shrink-0 transition-transform group-hover:scale-110" />
-                        <span className="group-hover:text-sapphire-600 dark:group-hover:text-sapphire-400 transition-colors">{feature}</span>
+                        <span className="group-hover:text-sapphire-600 transition-colors">{feature}</span>
                       </div>
                     ))}
                   </div>
@@ -300,11 +299,11 @@ const WebsiteCreation = () => {
               </Card>
               
               {/* Website Examples */}
-              <Card className="border-sapphire-200 dark:border-sapphire-800 shadow-lg overflow-hidden mb-8">
+              <Card className="border-sapphire-200 shadow-lg overflow-hidden mb-8">
                 <CardContent className="p-0">
-                  <div className="p-6 bg-gradient-to-br from-sapphire-500/10 to-sapphire-700/10 dark:from-sapphire-600/20 dark:to-sapphire-900/20">
+                  <div className="p-6 bg-gradient-to-br from-sapphire-500/10 to-sapphire-700/10">
                     <div className="flex items-center gap-2 mb-4">
-                      <Trophy className="h-5 w-5 text-sapphire-600 dark:text-sapphire-400" />
+                      <Trophy className="h-5 w-5 text-sapphire-600" />
                       <h3 className="text-xl font-bold">Featured Work</h3>
                     </div>
                     
@@ -347,7 +346,7 @@ const WebsiteCreation = () => {
                 </CardContent>
               </Card>
               
-              <Card className="bg-sapphire-600 text-white dark:bg-sapphire-800">
+              <Card className="bg-sapphire-600 text-white">
                 <CardContent className="p-8">
                   <h3 className="text-xl font-bold mb-4">Ready to Build Your Website?</h3>
                   <p className="text-sapphire-100 mb-6">
@@ -368,7 +367,7 @@ const WebsiteCreation = () => {
       </section>
       
       {/* Process Section */}
-      <section className="py-20 px-6 bg-secondary dark:bg-secondary/50">
+      <section className="py-20 px-6 bg-secondary">
         <div className="max-w-7xl mx-auto">
           <motion.div 
             className="text-center mb-16"
@@ -503,7 +502,7 @@ const WebsiteCreation = () => {
               Let's create a website that showcases your skills, projects, or business to the world.
             </p>
             <Button asChild size="lg" variant="outline" className="bg-white hover:bg-white/90 text-primary">
-              <Link to="/contact" className="flex items-center gap-2">
+              <Link to="/contact" className="flex items-center justify-center gap-2">
                 Schedule a Consultation
                 <ArrowRight className="h-4 w-4" />
               </Link>

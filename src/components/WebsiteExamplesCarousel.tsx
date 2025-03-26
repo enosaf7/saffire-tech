@@ -74,11 +74,11 @@ const WebsiteExamplesCarousel = ({ className }: WebsiteExamplesCarouselProps) =>
           {websiteExamples.map((website) => (
             <CarouselItem key={website.id} className="md:basis-1/2 lg:basis-1/3">
               <div className="p-1">
-                <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 border-sapphire-200 dark:border-sapphire-800">
+                <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 border-sapphire-200">
                   <CardContent className="p-0">
                     <div className="relative aspect-[4/3] overflow-hidden">
                       <div 
-                        className="w-full h-full bg-sapphire-100 dark:bg-sapphire-900 animate-pulse"
+                        className="w-full h-full bg-sapphire-100 animate-pulse"
                         style={{
                           backgroundImage: `url(${website.imageUrl})`,
                           backgroundSize: 'cover',
@@ -96,8 +96,8 @@ const WebsiteExamplesCarousel = ({ className }: WebsiteExamplesCarouselProps) =>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="left-1 lg:-left-12 bg-white/80 dark:bg-black/50 hover:bg-white dark:hover:bg-black/70" />
-        <CarouselNext className="right-1 lg:-right-12 bg-white/80 dark:bg-black/50 hover:bg-white dark:hover:bg-black/70" />
+        <CarouselPrevious className="left-1 lg:-left-12 bg-white/80 hover:bg-white" />
+        <CarouselNext className="right-1 lg:-right-12 bg-white/80 hover:bg-white" />
       </Carousel>
     </div>
   );
